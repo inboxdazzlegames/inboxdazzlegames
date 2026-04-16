@@ -20,16 +20,14 @@
       animation: glowText 2s infinite alternate;
     }
 
-    @keyframes glowText {
-      from { text-shadow: 0 0 10px rgba(96,165,250,0.4); }
-      to { text-shadow: 0 0 30px rgba(167,139,250,1); }
-    }
+
 
     .logo-glow {
       animation: pulseGlow 2s infinite alternate;
     }
-
-
+    @keyframes pulseGlow {
+      from { box-shadow: 0 0 20px rgba(59,130,246,0.5); }
+      to { box-shadow: 0 0 50px rgba(59,130,246,1); }
     }
 
     .card-glass {
