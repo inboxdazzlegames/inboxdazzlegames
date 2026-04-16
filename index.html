@@ -326,7 +326,32 @@
       requestAnimationFrame(frame);
     }
     frame();
+      /* CURSOR */
+    const curDot = document.getElementById('cur');
+    const curRing = document.getElementById('cur-ring');
+    let cx = 0, cy = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => {
+      cx = e.clientX; cy = e.clientY;
+      mouse.x = cx; mouse.y = cy;
+      curDot.style.left = cx + 'px'; curDot.style.top = cy + 'px';
+    });
+    (function trackRing() {
+      rx += (cx - rx) * 0.12; ry += (cy - ry) * 0.12;
+      curRing.style.left = rx + 'px'; curRing.style.top = ry + 'px';
+      requestAnimationFrame(trackRing);
+    })();
+    document.querySelectorAll('a,button').forEach(el => {
+      el.addEventListener('mouseenter', () => { curDot.firstChild.style.transform = 'translate(-50%,-50%) scale(2.5)'; curRing.style.width = '58px'; curRing.style.height = '58px'; curRing.style.borderColor = 'rgba(96,165,250,.7)'; });
+      el.addEventListener('mouseleave', () => { curDot.firstChild.style.transform = 'translate(-50%,-50%) scale(1)'; curRing.style.width = '38px'; curRing.style.height = '38px'; curRing.style.borderColor = 'rgba(96,165,250,.45)'; });
+    });
 
+    /* SCROLL REVEAL */
+    const obs = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); obs.unobserve(e.target); } }), { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    /* NAV SCROLL */
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => { nav.style.background = window.scrollY > 60 ? 'rgba(2,4,8,.92)' : 'rgba(2,4,8,.65)'; });
 
   </script>
 </body>
